@@ -10,7 +10,7 @@ import android.view.WindowInsetsAnimation;
 
 public class MusicService extends Service {
     private MediaPlayer mediaPlayer;
-    int song;
+    int song=0;
     private final String TAG="check";
 
     public MusicService() {
@@ -20,7 +20,6 @@ public class MusicService extends Service {
     @Override
     public void onCreate() {
         super.onCreate();
-        mediaPlayer=MediaPlayer.create(this,R.raw.shivsaktisong);
         Log.v(TAG,"On Create in service");
 
 
@@ -56,6 +55,8 @@ public class MusicService extends Service {
 
     @Override
     public IBinder onBind(Intent intent) {
+        song = intent.getIntExtra("songForService",5);
+        mediaPlayer=MediaPlayer.create(this,song);
         Log.v(TAG,"On Bind");
         return new MusicBoundService();
     }
